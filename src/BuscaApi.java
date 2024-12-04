@@ -1,3 +1,5 @@
+import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -17,10 +19,14 @@ public class BuscaApi {
         HttpRequest request = HttpRequest.newBuilder().
                 uri(URI.create(endereco)).build();
 
-
-        HttpResponse<String> response =
-                client.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         System.out.println(response.body());
+
+        String json = response.body();
+
+        Gson gson = new Gson();
+        Titulo meuTitulo = gson.fromJson(json, Titulo.class);
+        System.out.println("Titulo " + meuTitulo.getNome() + "Ano de lançamento " + meuTitulo.getAnoDeLancamento());
 
     }
 }
