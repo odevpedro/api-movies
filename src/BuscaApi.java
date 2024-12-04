@@ -3,13 +3,19 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Scanner;
 
 public class BuscaApi {
     public static void main(String[] args) throws IOException, InterruptedException {
 
+        Scanner filme = new Scanner(System.in);
+        System.out.println("digitae o nome do filme");
+        var busca = filme.nextLine();
+
+        String endereco = "https://www.omdbapi.com/?t=" + busca + "&apikey=e8f4e026";
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder().
-                uri(URI.create("https://www.omdbapi.com/?i=tt3896198&apikey=e8f4e026")).build();
+                uri(URI.create(endereco)).build();
 
 
         HttpResponse<String> response =
