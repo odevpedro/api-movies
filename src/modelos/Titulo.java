@@ -1,3 +1,5 @@
+package modelos;
+
 import com.google.gson.annotations.SerializedName;
 
 public class Titulo implements Comparable<Titulo> {

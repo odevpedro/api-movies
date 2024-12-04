@@ -1,4 +1,7 @@
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import modelos.TituloOMDB;
 
 import java.io.IOException;
 import java.net.URI;
@@ -11,7 +14,7 @@ public class BuscaApi {
     public static void main(String[] args) throws IOException, InterruptedException {
 
         Scanner filme = new Scanner(System.in);
-        System.out.println("digitae o nome do filme");
+        System.out.println("digite o nome do filme: ");
         var busca = filme.nextLine();
 
         String endereco = "https://www.omdbapi.com/?t=" + busca + "&apikey=e8f4e026";
@@ -20,13 +23,14 @@ public class BuscaApi {
                 uri(URI.create(endereco)).build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
 
         String json = response.body();
 
-        Gson gson = new Gson();
-        Titulo meuTitulo = gson.fromJson(json, Titulo.class);
-        System.out.println("Titulo " + meuTitulo.getNome() + "Ano de lançamento " + meuTitulo.getAnoDeLancamento());
+        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
+                .create();
+
+        TituloOMDB meuTitulo = gson.fromJson(json, TituloOMDB.class);
+        System.out.println(meuTitulo);
 
     }
 }
