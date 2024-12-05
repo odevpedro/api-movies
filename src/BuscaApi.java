@@ -1,6 +1,7 @@
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import modelos.Titulo;
 import modelos.TituloOMDB;
 
 import java.io.IOException;
@@ -29,8 +30,19 @@ public class BuscaApi {
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
                 .create();
 
-        TituloOMDB meuTitulo = gson.fromJson(json, TituloOMDB.class);
-        System.out.println(meuTitulo);
+        TituloOMDB meuTituloOmdb = gson.fromJson(json, TituloOMDB.class);
+        System.out.println(meuTituloOmdb);
+
+        try {
+            Titulo meuTitulo = new Titulo(meuTituloOmdb);
+        } catch (NumberFormatException e){
+            System.out.println("Aconteceu um erro");
+            System.out.println(e.getMessage());
+        }
+        System.out.println("O programa finalizou corretamente!!!");
+
+
+
 
     }
 }
