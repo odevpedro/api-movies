@@ -1,12 +1,10 @@
 package modelos;
 
 import com.google.gson.annotations.SerializedName;
+import excessao.ErroDeConversaoAnoExcpetion;
 
 public class Titulo implements Comparable<Titulo> {
-    @SerializedName("Title")
     private String nome;
-
-    @SerializedName("Year")
     private int anoDeLancamento;
 
     private boolean incluidoNoPlano;
@@ -22,6 +20,9 @@ public class Titulo implements Comparable<Titulo> {
     }
 
     public Titulo(TituloOMDB meuTituloOmdb) {
+        if (meuTituloOmdb.year().length() > 4){
+            throw new ErroDeConversaoAnoExcpetion("Não consegui converter o ano por ter mais de 4 caracteres");
+        }
         this.nome = meuTituloOmdb.title();
         this.anoDeLancamento = Integer.parseInt(meuTituloOmdb.year());
         this.duracaoEmMinutos = Integer.valueOf(meuTituloOmdb.runtime().substring(0,2));
@@ -83,11 +84,9 @@ public class Titulo implements Comparable<Titulo> {
     }
     @Override
     public String toString() {
-        return "Titulo{" +
-                "titulo='" + this.nome + '\'' +
-                ", ano=" + this.anoDeLancamento +
-                ", duracao=" + this.duracaoEmMinutos +
-                '}';
+        return "(nome ='" + this.nome + '\'' +
+                ", anoLancamento =" + this.anoDeLancamento +
+                ", duracao =" + this.duracaoEmMinutos + ")";
     }
 
 }
